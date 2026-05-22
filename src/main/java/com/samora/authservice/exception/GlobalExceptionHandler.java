@@ -15,6 +15,18 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<ApiResponse<Void>> handleConflict(ConflictException ex) {
+        ApiResponse<Void> response = ApiResponse.error(409, ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+    }
+
+    @ExceptionHandler(PasswordMismatchException.class)
+    public ResponseEntity<ApiResponse<Void>> handlePasswordMismatch(PasswordMismatchException ex) {
+        ApiResponse<Void> response = ApiResponse.error(400, ex.getMessage(), null);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ApiResponse<Void>> handleMessageNotReadable(
             HttpMessageNotReadableException ex) {
@@ -48,6 +60,7 @@ public class GlobalExceptionHandler {
     private String resolveValidationMessage(String objectName) {
         return switch (objectName) {
             // Map request object names to user-friendly messages
+            case "registerUserRequest" -> "User registration failed due to validation errors.";
             default -> "Validation failed.";
         };
     }
