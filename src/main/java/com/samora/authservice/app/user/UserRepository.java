@@ -14,6 +14,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // Find by email, excluding soft-deleted records
     Optional<User> findByEmail(String email);
 
+    // Find by username, excluding soft-deleted records
+    Optional<User> findByUsername(String username);
+
+    // Find by phone number, excluding soft-deleted records
+    Optional<User> findByPhoneNumber(String phoneNumber);
+
     // Check if an email exists, excluding soft-deleted records
     boolean existsByEmail(String email);
 
