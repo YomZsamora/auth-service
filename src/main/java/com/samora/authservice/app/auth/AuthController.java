@@ -1,6 +1,8 @@
 
 package com.samora.authservice.app.auth;
 
+import com.samora.authservice.app.auth.dto.BasicLoginRequest;
+import com.samora.authservice.app.auth.dto.LoginResponse;
 import com.samora.authservice.app.user.UserService;
 import com.samora.authservice.app.user.dto.RegisterUserRequest;
 import com.samora.authservice.app.user.dto.UserResponse;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final UserService userService;
-    public AuthController(UserService userService) {
+    private final AuthService authService;
+    public AuthController(UserService userService, AuthService authService) {
         this.userService = userService;
+        this.authService = authService;
     }
 
     @PostMapping("/basic-registration")
@@ -33,5 +37,18 @@ public class AuthController {
                 user
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/basic-login")
+    public ResponseEntity<ApiResponse<LoginResponse>> basicLogin(
+            @Valid @RequestBody BasicLoginRequest request) {
+
+        LoginResponse loginResponse = authService.basicLogin(request);
+        ApiResponse<LoginResponse> response = ApiResponse.success(
+                200,
+                "Logged in successfully.",
+                loginResponse
+        );
+        return ResponseEntity.ok(response);
     }
 }
