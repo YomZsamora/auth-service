@@ -61,6 +61,7 @@ public class GlobalExceptionHandler {
         return switch (objectName) {
             // Map request object names to user-friendly messages
             case "registerUserRequest" -> "User registration failed due to validation errors.";
+            case "loginRequest" -> "Login failed due to validation errors.";
             default -> "Validation failed.";
         };
     }
