@@ -27,9 +27,7 @@ public class AuthController {
     }
 
     @PostMapping("/basic-registration")
-    public ResponseEntity<ApiResponse<UserResponse>> basicRegistration(
-            @Valid @RequestBody RegisterUserRequest request) {
-
+    public ResponseEntity<ApiResponse<UserResponse>> basicRegistration(@Valid @RequestBody RegisterUserRequest request) {
         UserResponse user = userService.registerUser(request);
         ApiResponse<UserResponse> response = ApiResponse.success(
                 201,
@@ -40,9 +38,7 @@ public class AuthController {
     }
 
     @PostMapping("/basic-login")
-    public ResponseEntity<ApiResponse<LoginResponse>> basicLogin(
-            @Valid @RequestBody BasicLoginRequest request) {
-
+    public ResponseEntity<ApiResponse<LoginResponse>> basicLogin(@Valid @RequestBody BasicLoginRequest request) {
         LoginResponse loginResponse = authService.basicLogin(request);
         ApiResponse<LoginResponse> response = ApiResponse.success(
                 200,
