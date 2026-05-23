@@ -1,4 +1,3 @@
-
 package com.samora.authservice.app.user;
 
 import com.samora.authservice.app.user.dto.RegisterUserRequest;
@@ -13,7 +12,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-
     public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -38,6 +36,7 @@ public class UserServiceImpl implements UserService {
             throw new ConflictException("A user with this phone number already exists.");
         }
 
+        // Create a new User entity based on the registration request
         User user = User.builder()
                 .username(request.username())
                 .name(request.name())
